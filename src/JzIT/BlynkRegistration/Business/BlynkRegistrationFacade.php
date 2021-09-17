@@ -4,7 +4,7 @@ namespace JzIT\BlynkRegistration\Business;
 
 use JzIT\BlynkRegistration\Business\Generator\HashGeneratorInterface;
 
-class BlynkRegistrationFacade implements BlynkFacadeInterface
+class BlynkRegistrationFacade implements BlynkRegistrationFacadeInterface
 {
     /**
      * @var \JzIT\BlynkRegistration\Business\Generator\HashGeneratorInterface
