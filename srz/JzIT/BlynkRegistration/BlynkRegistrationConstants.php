@@ -14,4 +14,5 @@ interface BlynkRegistrationConstants
     public const PARAM_LAST_LOGIN = '%last_login%';
     public const PARAM_IP = '%ip%';
     public const PARAM_ENERGY = '%energy%';
+    public const ROUTE_BLYNK_REGISTRATION = '/blynk/registration';
 }

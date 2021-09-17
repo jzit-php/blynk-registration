@@ -4,9 +4,13 @@ namespace JzIT\BlynkRegistration;
 
 use JzIT\BlynkRegistration\Business\Generator\HashGeneratorInterface;
 use JzIT\BlynkRegistration\Business\Generator\PasswordHashGenerator;
+use JzIT\BlynkRegistration\Business\Processor\PostProcessor;
+use JzIT\BlynkRegistration\Business\Processor\PostProcessorInterface;
+use JzIT\BlynkRegistration\Communication\Controller\PostController;
 use JzIT\Kernel\AbstractFactory;
 use JzIT\BlynkRegistration\Business\BlynkRegistrationFacade;
 use JzIT\BlynkRegistration\Business\BlynkRegistrationFacadeInterface;
+use JzIT\Serializer\SerializerConstants;
 
 /**
  * Class BlynkRegistrationFactory
@@ -34,5 +38,28 @@ class BlynkRegistrationFactory extends AbstractFactory
     protected function createHashGenerator(): HashGeneratorInterface
     {
         return new PasswordHashGenerator();
+    }
+
+    /**
+     * @return \JzIT\BlynkRegistration\Communication\Controller\PostController
+     */
+    public function createPostController(): PostController
+    {
+        return new PostController(
+            $this->createPostProcessor()
+        );
+    }
+
+    /**
+     * @return \JzIT\PidApi\Processor\PostProcessorInterface
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    protected function createPostProcessor(): PostProcessorInterface
+    {
+        return new PostProcessor(
+            $this->container->get(SerializerConstants::CONTAINER_SERVICE_NAME),
+            $this->container->get(BlynkRegistrationConstants::FACADE)
+        );
     }
 }
