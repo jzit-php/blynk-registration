@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace JzIT\BlynkRegistration\Communication\Controller;
 
 use JzIT\BlynkRegistration\BlynkRegistrationConstants;
+use JzIT\BlynkRegistration\Business\Processor\PostProcessorInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;

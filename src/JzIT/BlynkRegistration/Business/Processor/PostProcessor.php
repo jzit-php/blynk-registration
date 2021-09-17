@@ -6,6 +6,7 @@ namespace JzIT\BlynkRegistration\Business\Processor;
 
 use Generated\Transfer\Blynk\BlynkUserRegistrationRequestTransfer;
 use Generated\Transfer\Blynk\BlynkUserTransfer;
+use JzIT\BlynkRegistration\Business\BlynkRegistrationFacadeInterface;
 use JzIT\BlynkRegistration\Business\Registration\UserRegistration;
 use JzIT\Serializer\Wrapper\SerializerInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -20,7 +21,7 @@ class PostProcessor implements PostProcessorInterface
     /**
      * @var \JzIT\BlynkRegistration\Business\BlynkRegistrationFacadeInterface
      */
-    protected $pidFacade;
+    protected $blynkRegistrationFacade;
 
     /**
      * PostProcessor constructor.
