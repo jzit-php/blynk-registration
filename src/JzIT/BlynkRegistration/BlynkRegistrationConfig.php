@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace JzIT\BlynkRegistration;
 
-class BlynkRegistrationConfig implements BlynkRegistrationConfigInterface
+use JzIT\Kernel\AbstractConfig;
+
+class BlynkRegistrationConfig extends AbstractConfig implements BlynkRegistrationConfigInterface
 {
     /**
      * @return string

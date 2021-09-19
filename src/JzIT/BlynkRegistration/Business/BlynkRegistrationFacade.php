@@ -2,8 +2,15 @@
 
 namespace JzIT\BlynkRegistration\Business;
 
+use Generated\Transfer\Blynk\BlynkUserTransfer;
 use JzIT\BlynkRegistration\Business\Generator\HashGeneratorInterface;
+use JzIT\BlynkRegistration\Business\Registration\RegistrationInterface;
 
+/**
+ * Class BlynkRegistrationFacade
+ *
+ * @package JzIT\BlynkRegistration\Business
+ */
 class BlynkRegistrationFacade implements BlynkRegistrationFacadeInterface
 {
     /**
@@ -12,13 +19,20 @@ class BlynkRegistrationFacade implements BlynkRegistrationFacadeInterface
     protected $hashGenerator;
 
     /**
-     * BlynkFacade constructor.
+     * @var \JzIT\BlynkRegistration\Business\Registration\RegistrationInterface 
+     */
+    protected $userRegistration;
+
+    /**
+     * BlynkRegistrationFacade constructor.
      *
      * @param \JzIT\BlynkRegistration\Business\Generator\HashGeneratorInterface $hashGenerator
+     * @param \JzIT\BlynkRegistration\Business\Registration\RegistrationInterface $registration
      */
-    public function __construct(HashGeneratorInterface $hashGenerator)
+    public function __construct(HashGeneratorInterface $hashGenerator, RegistrationInterface $registration)
     {
         $this->hashGenerator = $hashGenerator;
+        $this->userRegistration = $registration;
     }
 
     /**
@@ -31,5 +45,15 @@ class BlynkRegistrationFacade implements BlynkRegistrationFacadeInterface
     public function generateHash(string $password, string $email): string
     {
         return $this->hashGenerator->generateHash($password, $email);
+    }
+
+    /**
+     * @param \Generated\Transfer\Blynk\BlynkUserTransfer $userTransfer
+     *
+     * @return string
+     */
+    public function createUserRegistration(BlynkUserTransfer $userTransfer): string
+    {
+        return $this->userRegistration->createRegistration($userTransfer);
     }
 }

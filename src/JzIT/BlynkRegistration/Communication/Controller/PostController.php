@@ -37,7 +37,7 @@ class PostController
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $this->postProcessor->process($request);
+            $data = $this->postProcessor->process($request);
         } catch (Throwable $e) {
             return new JsonResponse(
                 [
@@ -47,7 +47,7 @@ class PostController
             );
         }
 
-        return new EmptyResponse(200);
+        return new JsonResponse(json_decode($data, true));
     }
 
     /**

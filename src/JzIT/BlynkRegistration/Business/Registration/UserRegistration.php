@@ -25,16 +25,22 @@ class UserRegistration implements RegistrationInterface
      * @param \JzIT\BlynkRegistration\BlynkRegistrationConfigInterface $blynkConfig
      * @param \JzIT\BlynkRegistration\Business\Generator\HashGeneratorInterface $hashGenerator
      */
-    public function __construct(BlynkConfigInterface $blynkConfig, HashGeneratorInterface $hashGenerator)
+    public function __construct(BlynkRegistrationConfigInterface $blynkConfig, HashGeneratorInterface $hashGenerator)
     {
         $this->confing = $blynkConfig;
         $this->hashGenerator = $hashGenerator;
     }
 
+    /**
+     * @param \Generated\Transfer\Blynk\BlynkUserTransfer $userTransfer
+     *
+     * @return string
+     * @throws \Exception
+     */
     public function createRegistration(BlynkUserTransfer $userTransfer): string
     {
         $data = [
-            BlynkRegistrationConstants::PARAM_PASSWORD => $userTransfer->getPasswort(),
+            BlynkRegistrationConstants::PARAM_PASSWORD => $this->hashGenerator->generateHash($userTransfer->getPasswort(), $userTransfer->getEmail()),
             BlynkRegistrationConstants::PARAM_EMAIL => $userTransfer->getEmail(),
             BlynkRegistrationConstants::PARAM_BLYNK_SERVER_URL => $userTransfer->getServer(),
             BlynkRegistrationConstants::PARAM_ENERGY => $userTransfer->getEnergy(),

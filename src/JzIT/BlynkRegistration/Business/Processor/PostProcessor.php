@@ -27,20 +27,21 @@ class PostProcessor implements PostProcessorInterface
      * PostProcessor constructor.
      *
      * @param \JzIT\Serializer\Wrapper\SerializerInterface $serializer
-     * @param \JzIT\BlynkRegistration\Business\BlynkRegistrationFacadeInterface $pidFacade
+     * @param \JzIT\BlynkRegistration\Business\BlynkRegistrationFacadeInterface $blynkRegistrationFacade
      */
-    public function __construct(SerializerInterface $serializer, BlynkRegistrationFacadeInterface $pidFacade)
+    public function __construct(SerializerInterface $serializer, BlynkRegistrationFacadeInterface $blynkRegistrationFacade)
     {
         $this->serializer = $serializer;
-        $this->pidFacade = $pidFacade;
+        $this->blynkRegistrationFacade = $blynkRegistrationFacade;
     }
 
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
      *
-     * @return \JzIT\PidApi\Processor\PostProcessorInterface
+     * @return string
+     * @throws \Exception
      */
-    public function process(ServerRequestInterface $request): PostProcessorInterface
+    public function process(ServerRequestInterface $request): string
     {
         $json = $request->getBody()->getContents();
 
@@ -52,7 +53,18 @@ class PostProcessor implements PostProcessorInterface
 
         //ToDo: extract and create Mapper
         $user = new BlynkUserTransfer();
+        $now = time();
 
-        return $this;
+        $user
+            ->setName($transfer->getEmail())
+            ->setEmail($transfer->getEmail())
+            ->setServer($transfer->getServerUrl())
+            ->setLastModified($now)
+            ->setLastLogin($now)
+            ->setEnergy(1000)
+            ->setServer($transfer->getServerUrl())
+            ->setPasswort($transfer->getPassword());
+
+        return $this->blynkRegistrationFacade->createUserRegistration($user);
     }
 }

@@ -15,7 +15,7 @@ class PasswordHashGenerator implements HashGeneratorInterface
      */
     public function generateHash(string $password, string $email): string
     {
-        $salt = $this->createHash(strtolower($mail));
+        $salt = $this->createHash(strtolower($email));
         return base64_encode($this->createHash($password . $salt));
     }
 

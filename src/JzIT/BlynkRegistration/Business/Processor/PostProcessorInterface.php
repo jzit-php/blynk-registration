@@ -11,7 +11,7 @@ interface PostProcessorInterface
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
      *
-     * @return \JzIT\BlynkRegistration\Business\Processor\PostProcessorInterface
+     * @return string
      */
-    public function process(ServerRequestInterface $request): PostProcessorInterface;
+    public function process(ServerRequestInterface $request): string;
 }
